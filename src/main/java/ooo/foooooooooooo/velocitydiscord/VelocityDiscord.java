@@ -14,6 +14,7 @@ import ooo.foooooooooooo.velocitydiscord.commands.Commands;
 import ooo.foooooooooooo.velocitydiscord.compat.LuckPerms;
 import ooo.foooooooooooo.velocitydiscord.config.PluginConfig;
 import ooo.foooooooooooo.velocitydiscord.discord.Discord;
+import ooo.foooooooooooo.velocitydiscord.discord.commands.LinkCommand;
 import ooo.foooooooooooo.velocitydiscord.yep.YepListener;
 import org.slf4j.Logger;
 
@@ -72,6 +73,8 @@ public class VelocityDiscord {
     }
 
     this.discord = new Discord();
+
+    new LinkCommand(this.discord);
 
     if (server.getPluginManager().isLoaded(Constants.YeplibId)) {
       this.yep = new YepListener();
