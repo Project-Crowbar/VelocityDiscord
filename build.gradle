@@ -34,7 +34,7 @@ dependencies {
     changing = true
   }
 
-  shade implementation("net.dv8tion:JDA:$jda_version") {
+  shade implementation("net.dv8tion:JDA:6.3.0") {
     exclude module: 'opus-java'
   }
 
@@ -42,7 +42,7 @@ dependencies {
 
   implementation "com.electronwill.night-config:toml:$night_config_version"
   implementation "cc.unilock:yeplib:$yeplib_version"
-  implementation 'net.dv8tion:JDA:6.3.0'
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
 
   testImplementation platform("org.junit:junit-bom:$junit_version")
   testImplementation 'org.junit.jupiter:junit-jupiter'
