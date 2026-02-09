@@ -10,10 +10,10 @@ configurations {
 }
 
 repositories {
+  maven { url = uri("$rootDir/local-repo") }
   mavenLocal()
   mavenCentral()
   maven { url = 'https://repo.papermc.io/repository/maven-public/' }
-  maven { url = 'https://jitpack.io' }
 }
 
 shadowJar {
@@ -41,7 +41,7 @@ dependencies {
   compileOnly "net.kyori:adventure-text-minimessage:$minimessage_version"
 
   implementation "com.electronwill.night-config:toml:$night_config_version"
-  implementation "com.github.unilock:yeplib:$yeplib_version"
+  implementation "cc.unilock:yeplib:$yeplib_version"
   implementation 'net.dv8tion:JDA:6.3.0'
 
   testImplementation platform("org.junit:junit-bom:$junit_version")
