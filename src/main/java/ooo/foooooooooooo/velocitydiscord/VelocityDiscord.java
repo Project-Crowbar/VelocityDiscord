@@ -14,11 +14,13 @@ import ooo.foooooooooooo.velocitydiscord.commands.Commands;
 import ooo.foooooooooooo.velocitydiscord.compat.LuckPerms;
 import ooo.foooooooooooo.velocitydiscord.config.PluginConfig;
 import ooo.foooooooooooo.velocitydiscord.discord.Discord;
+import ooo.foooooooooooo.velocitydiscord.discord.UserLinkData;
 import ooo.foooooooooooo.velocitydiscord.discord.commands.LinkCommand;
 import ooo.foooooooooooo.velocitydiscord.yep.YepListener;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.TimeUnit;
 
@@ -145,6 +147,13 @@ public class VelocityDiscord {
 
   public String reloadConfig() {
     String error = null;
+
+    // Load user link file
+    try {
+      UserLinkData.load();
+    } catch (IOException e) {
+      LOGGER.error("e: ", e);
+    }
 
     if (CONFIG == null) {
       CONFIG = new PluginConfig(this.dataDirectory);
