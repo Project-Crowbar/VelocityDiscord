@@ -11,6 +11,8 @@ import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
@@ -159,7 +161,24 @@ public class Discord extends ListenerAdapter {
       var guild = this.mainChannel.getGuild();
 
       for (var entry : this.commands.entrySet()) {
-        guild.upsertCommand(entry.getKey(), entry.getValue().description()).queue();
+        var name = entry.getKey();
+        var command = entry.getValue();
+
+        if (command instanceof LinkCommand) {
+          guild.upsertCommand(
+            Commands.slash(name, command.description())
+              .addOption(
+                OptionType.STRING,
+                "code",
+                "The code you got in-game",
+                true
+              )
+          ).queue();
+        } else {
+          guild.upsertCommand(
+            Commands.slash(name, command.description())
+          ).queue();
+        }
       }
     }
   }
