@@ -703,12 +703,13 @@ public class Discord extends ListenerAdapter {
         return;
       }
 
-      VelocityDiscord.LOGGER.info(
+      // Disable sending webhook message
+      /*VelocityDiscord.LOGGER.info(
         "Sending webhook message to `{}`: avatar={}, username={}",
         server,
         avatar,
         discordName
-      );
+      );*/
       client.sendMessage(webhookMessage).setAvatarUrl(avatar).setUsername(discordName).queue();
     } else {
       this.preReadyQueue.add(new QueuedWebhookMessage(server, type, webhookMessage, avatar, discordName));
