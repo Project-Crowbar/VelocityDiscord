@@ -12,7 +12,9 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
+import net.dv8tion.jda.api.interactions.commands.build.SlashCommandData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
@@ -157,29 +159,27 @@ public class Discord extends ListenerAdapter {
       );
     }
 
+    // Register commands
     if (!this.commands.isEmpty()) {
       var guild = this.mainChannel.getGuild();
-
+      List<CommandData> commandData = new ArrayList<>();
       for (var entry : this.commands.entrySet()) {
         var name = entry.getKey();
         var command = entry.getValue();
-
+        SlashCommandData slash = Commands.slash(name, command.description());
         if (command instanceof LinkCommand) {
-          guild.upsertCommand(
-            Commands.slash(name, command.description())
-              .addOption(
-                OptionType.STRING,
-                "code",
-                "The code you got in-game",
-                true
-              )
-          ).queue();
-        } else {
-          guild.upsertCommand(
-            Commands.slash(name, command.description())
-          ).queue();
+          slash.addOption(
+            OptionType.STRING,
+            "code",
+            "The code you got in-game",
+            true
+          );
         }
+        commandData.add(slash);
       }
+      guild.updateCommands()
+        .addCommands(commandData)
+        .queue();
     }
   }
 
