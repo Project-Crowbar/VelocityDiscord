@@ -160,8 +160,8 @@ public class Discord extends ListenerAdapter {
     }
 
     // Register commands
+    var guild = this.mainChannel.getGuild();
     if (!this.commands.isEmpty()) {
-      var guild = this.mainChannel.getGuild();
       List<CommandData> commandData = new ArrayList<>();
       for (var entry : this.commands.entrySet()) {
         var name = entry.getKey();
@@ -177,9 +177,9 @@ public class Discord extends ListenerAdapter {
         }
         commandData.add(slash);
       }
-      guild.updateCommands()
-        .addCommands(commandData)
-        .queue();
+      guild.updateCommands().addCommands(commandData).queue();
+    } else {
+      guild.updateCommands().queue();
     }
   }
 
