@@ -16,16 +16,6 @@ repositories {
   maven { url = 'https://repo.papermc.io/repository/maven-public/' }
 }
 
-shadowJar {
-  archiveClassifier.set("all")
-
-  // Relocate packages to avoid conflicts
-  relocate 'net.dv8tion.jda', 'shaded.net.dv8tion.jda'
-  relocate 'okhttp3', 'shaded.okhttp3'
-  relocate 'com.fasterxml', 'shaded.com.fasterxml'
-}
-
-
 dependencies {
   compileOnly("com.velocitypowered:velocity-api:$velocity_version") {
     changing = true
@@ -53,10 +43,15 @@ dependencies {
 }
 
 shadowJar {
-  setArchiveClassifier(null)
+  archiveClassifier.set("all")
+
+  // Relocate packages to avoid conflicts
+  relocate 'net.dv8tion.jda', 'shaded.net.dv8tion.jda'
+  relocate 'okhttp3', 'shaded.okhttp3'
+  relocate 'com.fasterxml', 'shaded.com.fasterxml'
+
   setConfigurations([project.configurations.shade])
   relocate("net.dv8tion", "ooo.foooooooooooo.velocitydiscord.lib.net.dv8tion")
-  minimize()
 }
 
 build {
