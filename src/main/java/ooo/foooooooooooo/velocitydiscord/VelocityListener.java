@@ -50,7 +50,7 @@ public class VelocityListener {
         discord.getPendingLinkCodes().put(code, username);
       }
 
-      player.disconnect(Component.text("Welcome! Use this code to link your account in Discord with the /link command:\n" + code));
+      player.disconnect(Component.text("Welcome! Link your account in the PRCB Discord. There is a tutorial video for it in the #modpack channel:\n" + code));
     }
   }
 
